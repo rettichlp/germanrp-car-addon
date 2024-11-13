@@ -3,6 +3,7 @@ package de.rettichlp.germanrpcaraddon.base;
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
 import lombok.RequiredArgsConstructor;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
@@ -100,6 +101,11 @@ public class DefaultAddonPlayer implements AddonPlayer {
     @Override
     public Scoreboard getScoreboard() {
         return labyAPI().minecraft().getScoreboard();
+    }
+
+    @Override
+    public Entity getVehicle() {
+        return getPlayer() != null ? getPlayer().getVehicle() : null;
     }
 
     @Override

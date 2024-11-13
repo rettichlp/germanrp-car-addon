@@ -1,6 +1,7 @@
 package de.rettichlp.germanrpcaraddon.base;
 
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
@@ -46,6 +47,9 @@ public interface AddonPlayer {
     ClientWorld getWorld();
 
     Scoreboard getScoreboard();
+
+    @Nullable
+    Entity getVehicle();
 
     void copyToClipboard(String string);
 }
