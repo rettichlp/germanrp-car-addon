@@ -7,6 +7,8 @@ import de.rettichlp.germanrpcaraddon.listener.ChangeGearListener;
 import de.rettichlp.germanrpcaraddon.listener.ChangeSirenListener;
 import de.rettichlp.germanrpcaraddon.listener.DoubleKeyPressListener;
 import de.rettichlp.germanrpcaraddon.listener.ScreenUpdateListener;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.models.addon.annotation.AddonMain;
 
@@ -17,6 +19,8 @@ import static net.labymod.api.client.component.format.NamedTextColor.GOLD;
 import static net.labymod.api.client.component.format.NamedTextColor.YELLOW;
 
 @AddonMain
+@Getter
+@Accessors(fluent = true)
 public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
 
     private CarController carController;
@@ -41,14 +45,6 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
                     .append(text("] ", DARK_GRAY))
                     .append(text(message, YELLOW)));
         }
-    }
-
-    public CarController carController() {
-        return carController;
-    }
-
-    public MinecraftController minecraftController() {
-        return minecraftController;
     }
 
     @Override

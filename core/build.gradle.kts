@@ -8,13 +8,13 @@ dependencies {
     // addonMavenDependency("org.jeasy:easy-random:5.0.0")
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-//    compileOnly("org.projectlombok:lombok:1.18.28")
-//    annotationProcessor("org.projectlombok:lombok:1.18.28")
-//
-//    testCompileOnly("org.projectlombok:lombok:1.18.28")
-//    testAnnotationProcessor("org.projectlombok:lombok:1.18.28")
+    addonMavenDependency("org.projectlombok", "lombok", "1.18.34")
 
-//    addonMavenDependency("org.projectlombok", "lombok", "1.18.28")
+    compileOnly("org.projectlombok", "lombok", "1.18.34")
+    annotationProcessor("org.projectlombok", "lombok", "1.18.34")
+
+    testCompileOnly("org.projectlombok", "lombok", "1.18.34")
+    testAnnotationProcessor("org.projectlombok", "lombok", "1.18.34")
 }
 
 labyModAnnotationProcessor {

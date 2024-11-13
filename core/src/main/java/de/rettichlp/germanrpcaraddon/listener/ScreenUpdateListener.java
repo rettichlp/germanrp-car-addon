@@ -2,6 +2,7 @@ package de.rettichlp.germanrpcaraddon.listener;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
 import de.rettichlp.germanrpcaraddon.events.ScreenUpdateEvent;
+import lombok.RequiredArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.ScreenRenderEvent;
 
@@ -14,6 +15,7 @@ import static net.labymod.api.Laby.fireEvent;
  * <p>When a change in the container ID is detected, the listener triggers
  * a {@link ScreenUpdateEvent} to notify other components of the screen update.
  */
+@RequiredArgsConstructor
 public class ScreenUpdateListener {
 
     private final GermanRPCarAddon addon;
@@ -22,10 +24,6 @@ public class ScreenUpdateListener {
      * Stores the previous container ID to track changes and detect when a new screen or container is rendered.
      */
     private int oldContainerId;
-
-    public ScreenUpdateListener(GermanRPCarAddon addon) {
-        this.addon = addon;
-    }
 
     /**
      * Handles the {@link ScreenRenderEvent} to monitor and respond to screen updates.

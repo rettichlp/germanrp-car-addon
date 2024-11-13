@@ -3,6 +3,7 @@ package de.rettichlp.germanrpcaraddon.listener;
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
 import de.rettichlp.germanrpcaraddon.events.DoubleKeyPressEvent;
 import de.rettichlp.germanrpcaraddon.events.ScreenUpdateEvent;
+import lombok.RequiredArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,16 +16,13 @@ import static net.labymod.api.Laby.labyAPI;
  *
  * @author RettichLP
  */
+@RequiredArgsConstructor
 public class ChangeGearListener {
 
     private final GermanRPCarAddon addon;
 
     @Nullable
     private String lastDoubleClickActionKey;
-
-    public ChangeGearListener(GermanRPCarAddon addon) {
-        this.addon = addon;
-    }
 
     /**
      * Event handler for handling double key presses. This method listens for {@code DoubleKeyPressEvent} events and performs specific

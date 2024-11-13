@@ -2,6 +2,7 @@ package de.rettichlp.germanrpcaraddon.listener;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
 import de.rettichlp.germanrpcaraddon.events.DoubleKeyPressEvent;
+import lombok.RequiredArgsConstructor;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent;
@@ -24,6 +25,7 @@ import static net.labymod.api.event.client.input.KeyEvent.State.PRESS;
  * ({@code W}, {@code S}, and {@code SPACE}) to detect double presses. If a key is pressed twice within 500 milliseconds, it considers
  * it a double press, logs this action for debugging purposes, and fires a custom {@link DoubleKeyPressEvent}.
  */
+@RequiredArgsConstructor
 public class DoubleKeyPressListener {
 
     private final GermanRPCarAddon addon;
@@ -36,10 +38,6 @@ public class DoubleKeyPressListener {
             S, 0L,
             SPACE, 0L
     ));
-
-    public DoubleKeyPressListener(GermanRPCarAddon addon) {
-        this.addon = addon;
-    }
 
     /**
      * Handles {@link KeyEvent} to detect and respond to double key presses.
