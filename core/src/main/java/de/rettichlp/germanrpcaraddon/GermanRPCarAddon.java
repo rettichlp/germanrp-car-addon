@@ -1,5 +1,7 @@
 package de.rettichlp.germanrpcaraddon;
 
+import de.rettichlp.germanrpcaraddon.base.AddonPlayer;
+import de.rettichlp.germanrpcaraddon.base.DefaultAddonPlayer;
 import de.rettichlp.germanrpcaraddon.controllers.CarController;
 import de.rettichlp.germanrpcaraddon.controllers.MinecraftController;
 import de.rettichlp.germanrpcaraddon.core.generated.DefaultReferenceStorage;
@@ -23,6 +25,7 @@ import static net.labymod.api.client.component.format.NamedTextColor.YELLOW;
 @Accessors(fluent = true)
 public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
 
+    private AddonPlayer player;
     private CarController carController;
     private MinecraftController minecraftController;
 
@@ -48,6 +51,13 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
     }
 
     @Override
+    protected void load() {
+        this.player = new DefaultAddonPlayer(this);
+
+        this.logger().info("Enabled germanrp-car-addon");
+    }
+
+    @Override
     protected void enable() {
         this.carController = ((DefaultReferenceStorage) this.referenceStorageAccessor()).getCarController();
         this.minecraftController = ((DefaultReferenceStorage) this.referenceStorageAccessor()).getMinecraftController();
@@ -59,7 +69,7 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
         this.registerListener(new DoubleKeyPressListener(this));
         this.registerListener(new ScreenUpdateListener(this));
 
-        this.logger().info("Enabled the Addon");
+        this.logger().info("Enabled germanrp-car-addon");
     }
 
     @Override
