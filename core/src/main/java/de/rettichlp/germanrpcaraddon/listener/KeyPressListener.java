@@ -12,6 +12,7 @@ import java.util.Map;
 
 import static java.lang.System.currentTimeMillis;
 import static net.labymod.api.Laby.fireEvent;
+import static net.labymod.api.Laby.references;
 import static net.labymod.api.client.gui.screen.key.Key.S;
 import static net.labymod.api.client.gui.screen.key.Key.SPACE;
 import static net.labymod.api.client.gui.screen.key.Key.W;
@@ -52,8 +53,8 @@ public class KeyPressListener {
     public void onKey(KeyEvent event) {
         Key key = event.key();
 
-        // Check if the key is being observed. If not, return to save performance
-        if (!this.lastPress.containsKey(key) || event.state() != PRESS) {
+        // Check if the key is being observed (to save performance) and if the chat is not open
+        if (event.state() != PRESS || !this.lastPress.containsKey(key) || references().chatAccessor().isChatOpen()) {
             return;
         }
 
