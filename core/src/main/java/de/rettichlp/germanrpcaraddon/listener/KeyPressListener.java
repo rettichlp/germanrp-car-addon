@@ -26,7 +26,7 @@ import static net.labymod.api.event.client.input.KeyEvent.State.PRESS;
  * it a double press, logs this action for debugging purposes, and fires a custom {@link DoubleKeyPressEvent}.
  */
 @RequiredArgsConstructor
-public class DoubleKeyPressListener {
+public class KeyPressListener {
 
     private final GermanRPCarAddon addon;
 
