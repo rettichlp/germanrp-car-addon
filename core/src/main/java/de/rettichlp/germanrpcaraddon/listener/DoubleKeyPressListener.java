@@ -66,9 +66,9 @@ public class DoubleKeyPressListener {
 
             // Fire own event for double press
             fireEvent(new DoubleKeyPressEvent(key));
+        } else {
+            // Update the time of the last press
+            this.lastPress.put(key, currentTimeMillis());
         }
-
-        // Update the time of the last press
-        this.lastPress.put(key, currentTimeMillis());
     }
 }
