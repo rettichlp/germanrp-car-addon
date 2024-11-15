@@ -2,9 +2,12 @@ package de.rettichlp.germanrpcaraddon;
 
 import de.rettichlp.germanrpcaraddon.base.AddonPlayer;
 import de.rettichlp.germanrpcaraddon.base.DefaultAddonPlayer;
+import de.rettichlp.germanrpcaraddon.base.services.CarService;
 import de.rettichlp.germanrpcaraddon.controllers.CarController;
 import de.rettichlp.germanrpcaraddon.controllers.MinecraftController;
 import de.rettichlp.germanrpcaraddon.core.generated.DefaultReferenceStorage;
+import de.rettichlp.germanrpcaraddon.listener.CarMenuListener;
+import de.rettichlp.germanrpcaraddon.listener.CarStateListener;
 import de.rettichlp.germanrpcaraddon.listener.ChangeGearListener;
 import de.rettichlp.germanrpcaraddon.listener.ChangeSirenListener;
 import de.rettichlp.germanrpcaraddon.listener.KeyPressListener;
@@ -26,8 +29,11 @@ import static net.labymod.api.client.component.format.NamedTextColor.YELLOW;
 public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
 
     private AddonPlayer player;
+
     private CarController carController;
     private MinecraftController minecraftController;
+
+    private CarService carService;
 
     /**
      * Outputs a debug message to the logger and optionally displays it in-game if debugging is enabled in the configuration settings.
@@ -62,8 +68,12 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
         this.carController = ((DefaultReferenceStorage) this.referenceStorageAccessor()).getCarController();
         this.minecraftController = ((DefaultReferenceStorage) this.referenceStorageAccessor()).getMinecraftController();
 
+        this.carService = new CarService(this);
+
         this.registerSettingCategory();
 
+        this.registerListener(new CarMenuListener(this));
+        this.registerListener(new CarStateListener(this));
         this.registerListener(new ChangeGearListener(this));
         this.registerListener(new ChangeSirenListener(this));
         this.registerListener(new KeyPressListener(this));
