@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import net.labymod.api.event.Subscribe;
 import org.jetbrains.annotations.Nullable;
 
-import static net.labymod.api.Laby.labyAPI;
-
 /**
  * Depending on whether the W or S button was pressed twice, the car should automatically switch to forward or reverse gear.
  * <p>
@@ -37,14 +35,13 @@ public class ChangeGearListener {
      */
     @Subscribe
     public void onDoubleKey(DoubleKeyPressEvent event) {
-        // Check if the player is ingame and in a car
-        boolean ingame = labyAPI().minecraft().isIngame();
-        if (ingame && this.addon.carController().isInCar()) {
+        // Check if the player is in a car
+        this.addon.carService().executeOnCar(car -> {
             // Save key for later use
             this.lastDoubleClickActionKey = event.key().getName();
             // Press the key to swap the offhand, it is the key to open the car inventory
             this.addon.minecraftController().pressSwapOffhandKey();
-        }
+        }, () -> {});
     }
 
     /**
