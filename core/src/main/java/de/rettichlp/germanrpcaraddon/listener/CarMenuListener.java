@@ -43,6 +43,9 @@ public class CarMenuListener {
         this.addon.carService().executeOnCar(car -> {
             this.addon.debug("Car menu detected of car: " + car.toString());
 
+            // Retrieve engine state through the size of the inventory (running = 54, off = 27)
+            car.setEngineRunning(this.addon.carController().isRunning());
+
             // Check if the gear should be changed
             if (car.getScheduledGearChange() != null) {
                 // If this field is empty, close the container screen and reset the last double click action key without any further logic
