@@ -8,8 +8,6 @@ import net.labymod.api.client.entity.Entity;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.PARK;
 import static java.util.Objects.requireNonNull;
@@ -65,8 +63,6 @@ public class CarService {
     @Builder
     public static class Car {
 
-        private final BlockingQueue<CarTask> scheduledCarTasks = new LinkedBlockingQueue<>();
-
         /**
          * The unique identifier of the driver seat armorstand of the car.
          */
@@ -96,17 +92,23 @@ public class CarService {
         @Builder.Default
         private boolean engineRunning = false;
 
+        /**
+         * Indicates whether the car's siren should be changed.
+         */
+        private boolean scheduledSirenChange;
+
+        /**
+         * The key that was double-pressed to schedule a gear change.
+         */
+        private String scheduledGearChange;
+
+        /**
+         * The gears of the car.
+         */
         public enum Gear {
             PARK,
             DRIVE,
             REVERSE
-        }
-
-        public enum CarTask {
-            TOGGLE_EMERGENCY_LIGHTS,
-            TOGGLE_ENGINE,
-            CHANGE_GEAR_TO_DRIVE,
-            CHANGE_GEAR_TO_REVERSE
         }
     }
 }

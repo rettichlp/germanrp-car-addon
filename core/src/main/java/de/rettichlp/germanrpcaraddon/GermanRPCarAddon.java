@@ -8,8 +8,7 @@ import de.rettichlp.germanrpcaraddon.controllers.MinecraftController;
 import de.rettichlp.germanrpcaraddon.core.generated.DefaultReferenceStorage;
 import de.rettichlp.germanrpcaraddon.listener.CarMenuListener;
 import de.rettichlp.germanrpcaraddon.listener.CarStateListener;
-import de.rettichlp.germanrpcaraddon.listener.ChangeGearListener;
-import de.rettichlp.germanrpcaraddon.listener.ChangeSirenListener;
+import de.rettichlp.germanrpcaraddon.listener.CarChangeRequestListener;
 import de.rettichlp.germanrpcaraddon.listener.KeyPressListener;
 import de.rettichlp.germanrpcaraddon.listener.ScreenUpdateListener;
 import lombok.Getter;
@@ -37,8 +36,8 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
 
     /**
      * Outputs a debug message to the logger and optionally displays it in-game if debugging is enabled in the configuration settings.
-     *
-     * <p>The method first logs the provided message using the addon’s logger. If the
+     * <p>
+     * The method first logs the provided message using the addon’s logger. If the
      * debug mode is active (as determined by the configuration), it formats the message with a "[Debug]" label and displays it in-game
      * for easy visibility.
      *
@@ -72,10 +71,9 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
 
         this.registerSettingCategory();
 
+        this.registerListener(new CarChangeRequestListener(this));
         this.registerListener(new CarMenuListener(this));
         this.registerListener(new CarStateListener(this));
-        this.registerListener(new ChangeGearListener(this));
-        this.registerListener(new ChangeSirenListener(this));
         this.registerListener(new KeyPressListener(this));
         this.registerListener(new ScreenUpdateListener(this));
 
