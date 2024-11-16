@@ -50,14 +50,18 @@ public class CarChangeRequestListener {
             String keyName = event.key().getName();
             switch (keyName) {
                 case "W" -> {
-                    if (car.getGear() != DRIVE) {
-                        car.setScheduledGearChange(keyName);
+                    if (car.getGear() == DRIVE) {
+                        return;
                     }
+
+                    car.setScheduledGearChange(keyName);
                 }
                 case "S" -> {
-                    if (car.getGear() != REVERSE) {
-                        car.setScheduledGearChange(keyName);
+                    if (car.getGear() == REVERSE) {
+                        return;
                     }
+
+                    car.setScheduledGearChange(keyName);
                 }
                 case "SPACE" -> car.setScheduledSirenChange(true);
             }
