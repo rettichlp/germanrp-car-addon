@@ -19,29 +19,35 @@ public class KeyPressListener {
 
     private final GermanRPCarAddon addon;
 
-    private final HashMap<Key, Long> lastPress = new HashMap<>();
+    private Pair<Key, Long> lastPress = Pair.of(null, 0L);
 
     @Subscribe
     public void onKey(KeyEvent event) {
         Key key = event.key();
 
-        // Check if the key is being observed (to save performance) and if the chat is not open
+        // Check the key press state and if the chat is not open
         if (event.state() != PRESS || references().chatAccessor().isChatOpen()) {
             return;
         }
 
+        Key lastPressedKey = this.lastPress.getFirst();
+        if (isNull(lastPressedKey) || !lastPressedKey.equals(key)) {
+            this.lastPress = Pair.of(key, currentTimeMillis());
+            return;
+        }
+
+        // The last press can't be null, because it is checked before via the key
+        assert nonNull(this.lastPress.getSecond());
         // Check for double press, because single press is already used by the server
-        if (currentTimeMillis() - this.lastPress.getOrDefault(key, 0L) < 500) {
+        long sinceLastPress = currentTimeMillis() - this.lastPress.getSecond();
+        if (sinceLastPress < 500) {
             this.addon.debug("Key double pressed: " + key.getName());
 
-            // Reset the time of the last press
-            this.lastPress.remove(key);
+            // Reset the last pressed key
+            this.lastPress = Pair.of(null, 0L);
 
             // Fire own event for double press
-            fireEvent(new DoubleKeyPressEvent(key));
-        } else {
-            // Update the time of the last press
-            this.lastPress.put(key, currentTimeMillis());
+            fireEvent(new DoubleKeyPressEvent(key, sinceLastPress));
         }
     }
 }
