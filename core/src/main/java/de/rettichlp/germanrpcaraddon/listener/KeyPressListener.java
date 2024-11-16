@@ -8,8 +8,9 @@ import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.input.KeyEvent;
 import net.labymod.api.util.Pair;
 
+import java.util.Objects;
+
 import static java.lang.System.currentTimeMillis;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static net.labymod.api.Laby.fireEvent;
 import static net.labymod.api.Laby.references;
@@ -58,21 +59,22 @@ public class KeyPressListener {
             return;
         }
 
-        Key lastPressedKey = this.lastPress.getFirst();
-        if (isNull(lastPressedKey) || !lastPressedKey.equals(key)) {
-            this.lastPress = Pair.of(key, currentTimeMillis());
+        // Reset the last press to the current key
+        Key lastPressKey = this.lastPress.getFirst();
+        Long lastPressTimestamp = this.lastPress.getSecond();
+        this.lastPress = Pair.of(key, currentTimeMillis());
+
+        // Check if the last key is the same as the current key (with additional null check)
+        if (!Objects.equals(lastPressKey, key)) {
             return;
         }
 
         // The last press can't be null, because it is checked before via the key
-        assert nonNull(this.lastPress.getSecond());
+        assert nonNull(lastPressTimestamp);
         // Check for double press, because single press is already used by the server
-        long sinceLastPress = currentTimeMillis() - this.lastPress.getSecond();
+        long sinceLastPress = currentTimeMillis() - lastPressTimestamp;
         if (sinceLastPress < 500) {
             this.addon.debug("Key double pressed: " + key.getName());
-
-            // Reset the last pressed key
-            this.lastPress = Pair.of(null, 0L);
 
             // Fire own event for double press
             fireEvent(new DoubleKeyPressEvent(key, sinceLastPress));
