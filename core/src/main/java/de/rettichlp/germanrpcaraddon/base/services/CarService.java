@@ -103,6 +103,11 @@ public class CarService {
         private String scheduledGearChange;
 
         /**
+         * Indicates whether the car's engine should be turned off.
+         */
+        private boolean scheduledEngineTurnOff;
+
+        /**
          * The gears of the car.
          */
         public enum Gear {

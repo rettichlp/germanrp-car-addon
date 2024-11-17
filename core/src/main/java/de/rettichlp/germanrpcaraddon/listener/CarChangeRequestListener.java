@@ -4,9 +4,12 @@ import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
 import de.rettichlp.germanrpcaraddon.events.DoubleKeyPressEvent;
 import lombok.RequiredArgsConstructor;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.input.KeyEvent;
 
 import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.DRIVE;
 import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.REVERSE;
+import static net.labymod.api.client.gui.screen.key.Key.L_SHIFT;
+import static net.labymod.api.event.client.input.KeyEvent.State.PRESS;
 
 /**
  * Listener for handling double key press events relevant to car actions. This listener processes specific keys ({@code W}, {@code S},
@@ -65,6 +68,28 @@ public class CarChangeRequestListener {
                 }
                 case "SPACE" -> car.setScheduledSirenChange(true);
             }
+
+            // Press the key to swap the offhand, it is the key to open the car inventory
+            this.addon.minecraftController().pressSwapOffhandKey();
+        }, () -> {});
+    }
+
+    @Subscribe
+    public void onKey(KeyEvent event) {
+        // Check if the key is the leave key
+        if (event.state() != PRESS || !event.key().equals(L_SHIFT)) {
+            return;
+        }
+
+        // Check if the player is in a car
+        this.addon.carService().executeOnCar(car -> {
+            if (!car.isEngineRunning()) {
+                return;
+            }
+
+            // Cancel the event to prevent the player from leaving the car before the engine is turned off
+            event.setCancelled(true);
+            car.setScheduledEngineTurnOff(true);
 
             // Press the key to swap the offhand, it is the key to open the car inventory
             this.addon.minecraftController().pressSwapOffhandKey();

@@ -80,6 +80,14 @@ public class CarMenuListener {
                 // Click the slot and reset the change siren variable
                 car.setScheduledSirenChange(false);
                 this.addon.minecraftController().inventoryClick(slot);
+                return;
+            }
+
+            // Check if the car should be turned off
+            if (car.isScheduledEngineTurnOff()) {
+                // The car should be turned off, click the slot and reset the turn off variable
+                car.setScheduledEngineTurnOff(false);
+                this.addon.minecraftController().inventoryClick(13);
             }
         }, () -> {});
     }
