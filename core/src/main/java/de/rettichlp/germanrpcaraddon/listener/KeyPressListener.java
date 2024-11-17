@@ -19,8 +19,9 @@ import static net.labymod.api.event.client.input.KeyEvent.State.PRESS;
 /**
  * Listens for key presses and handles double key presses within a specific timeframe. This listener is responsible for detecting
  * double key presses and firing a {@link DoubleKeyPressEvent} if the condition is met.
- * <p>
- * The listener ensures that the action only proceeds if the key press state matches the expected {@code PRESS} state and the chat is
+ *
+ * <p>The listener ensures that the action only proceeds if the key press state matches the expected {@code PRESS} state and the chat
+ * is
  * not currently open. It also manages the timing of key presses using an internal {@code lastPress} variable.
  *
  * @author RettichLP
@@ -40,8 +41,8 @@ public class KeyPressListener {
     /**
      * Handles the {@link KeyEvent} triggered when a key is pressed. This method checks for a double key press within a 500-millisecond
      * timeframe and fires a {@link DoubleKeyPressEvent} if the condition is met.
-     * <p>
-     * The method ensures that the action only proceeds if:
+     *
+     * <p>The method ensures that the action only proceeds if:
      * <ul>
      *     <li>The key press state matches the expected {@code PRESS} state.</li>
      *     <li>The chat is not currently open, as determined by {@code chatAccessor().isChatOpen()}.</li>

@@ -6,9 +6,9 @@ import de.rettichlp.germanrpcaraddon.base.services.CarService;
 import de.rettichlp.germanrpcaraddon.controllers.CarController;
 import de.rettichlp.germanrpcaraddon.controllers.MinecraftController;
 import de.rettichlp.germanrpcaraddon.core.generated.DefaultReferenceStorage;
+import de.rettichlp.germanrpcaraddon.listener.CarChangeRequestListener;
 import de.rettichlp.germanrpcaraddon.listener.CarMenuListener;
 import de.rettichlp.germanrpcaraddon.listener.CarStateListener;
-import de.rettichlp.germanrpcaraddon.listener.CarChangeRequestListener;
 import de.rettichlp.germanrpcaraddon.listener.KeyPressListener;
 import de.rettichlp.germanrpcaraddon.listener.ScreenUpdateListener;
 import lombok.Getter;
@@ -22,6 +22,11 @@ import static net.labymod.api.client.component.format.NamedTextColor.DARK_GRAY;
 import static net.labymod.api.client.component.format.NamedTextColor.GOLD;
 import static net.labymod.api.client.component.format.NamedTextColor.YELLOW;
 
+/**
+ * The main class of the GermanRP Car Addon.
+ *
+ * @author RettichLP
+ */
 @AddonMain
 @Getter
 @Accessors(fluent = true)
@@ -36,10 +41,9 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
 
     /**
      * Outputs a debug message to the logger and optionally displays it in-game if debugging is enabled in the configuration settings.
-     * <p>
-     * The method first logs the provided message using the addon’s logger. If the
-     * debug mode is active (as determined by the configuration), it formats the message with a "[Debug]" label and displays it in-game
-     * for easy visibility.
+     *
+     * <p>The method first logs the provided message using the addon’s logger. If the debug mode is active (as determined by the
+     * configuration), it formats the message with a "[Debug]" label and displays it in-game for easy visibility.
      *
      * @param message The debug message to log and display.
      */

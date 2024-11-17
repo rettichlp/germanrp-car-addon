@@ -36,11 +36,11 @@ public interface AddonPlayer {
 
     void sendEmptyMessage();
 
-//    void sendErrorMessage(String message);
+    //void sendErrorMessage(String message);
 
-//    void sendInfoMessage(String message);
+    //void sendInfoMessage(String message);
 
-//    void sendSyntaxMessage(String message);
+    //void sendSyntaxMessage(String message);
 
     void sendServerMessage(String message);
 

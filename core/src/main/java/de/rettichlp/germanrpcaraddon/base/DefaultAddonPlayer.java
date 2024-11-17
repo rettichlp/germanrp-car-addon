@@ -66,26 +66,26 @@ public class DefaultAddonPlayer implements AddonPlayer {
         sendMessage("");
     }
 
-//    @Override
-//    public void sendErrorMessage(String message) {
-//        this.addon.displayMessage(Message.getBuilder()
-//                .error().space()
-//                .of(message).color(ColorCode.GRAY).advance()
-//                .createComponent());
-//    }
+    /*@Override
+    public void sendErrorMessage(String message) {
+        this.addon.displayMessage(Message.getBuilder()
+                .error().space()
+                .of(message).color(ColorCode.GRAY).advance()
+                .createComponent());
+    }
 
-//    @Override
-//    public void sendInfoMessage(String message) {
-//        this.addon.displayMessage(Message.getBuilder()
-//                .info().space()
-//                .of(message).color(ColorCode.WHITE).advance()
-//                .createComponent());
-//    }
+    @Override
+    public void sendInfoMessage(String message) {
+        this.addon.displayMessage(Message.getBuilder()
+                .info().space()
+                .of(message).color(ColorCode.WHITE).advance()
+                .createComponent());
+    }
 
-//    @Override
-//    public void sendSyntaxMessage(String message) {
-//        sendErrorMessage("Syntax: " + message);
-//    }
+    @Override
+    public void sendSyntaxMessage(String message) {
+        sendErrorMessage("Syntax: " + message);
+    }*/
 
     @Override
     public void sendServerMessage(String message) {

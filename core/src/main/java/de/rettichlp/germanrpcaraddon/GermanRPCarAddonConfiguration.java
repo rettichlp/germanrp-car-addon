@@ -7,6 +7,11 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
+/**
+ * The configuration settings for the GermanRP Car Addon.
+ *
+ * @author RettichLP
+ */
 @ConfigName("settings")
 @Getter
 @Accessors(fluent = true)

@@ -74,6 +74,11 @@ public class CarChangeRequestListener {
         }, () -> {});
     }
 
+    /**
+     * Handles key press events to manage car-related actions.
+     *
+     * @param event the key press event containing the key pressed and state details
+     */
     @Subscribe
     public void onKey(KeyEvent event) {
         // Check if the key is the leave key

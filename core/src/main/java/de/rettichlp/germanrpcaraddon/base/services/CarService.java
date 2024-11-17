@@ -14,17 +14,58 @@ import static java.util.Objects.requireNonNull;
 import static net.labymod.api.Laby.labyAPI;
 import static org.spongepowered.include.com.google.common.base.Preconditions.checkArgument;
 
+/**
+ * Service for managing car-related actions and data. This service provides methods to execute functions on the player's current car
+ *
+ * @author RettichLP
+ */
 @Data
 public class CarService {
 
     private final GermanRPCarAddon addon;
 
+    /**
+     * The list of cars the player was at least once inside during the current session.
+     */
     private Set<Car> cars = new HashSet<>();
 
+    /**
+     * Executes a given function on the player's current car if they are in one. If the player is not in a car, a fallback runnable is
+     * executed instead.
+     *
+     * @param onCarFunction the function to execute when the player is in a car; receives the current car as a parameter
+     * @param elseRunnable  the fallback action to execute when the player is not in a car
+     *
+     * @throws NullPointerException if {@code onCarFunction} or {@code elseRunnable} is {@code null}
+     */
+    public void executeOnCar(Function<Car> onCarFunction, Runnable elseRunnable) {
+        if (!isInCar()) {
+            elseRunnable.run();
+            return;
+        }
+
+        Car currentCar = getCurrentCar();
+        onCarFunction.apply(currentCar);
+    }
+
+    /**
+     * Checks if the player is currently inside a car.
+     *
+     * @return {@code true} if the player is in a car, {@code false} otherwise
+     */
     private boolean isInCar() {
         return labyAPI().minecraft().isIngame() && this.addon.carController().isInCar();
     }
 
+    /**
+     * Retrieves the car entity the player is currently inside. If the car is not yet registered in the system, it creates a new
+     * {@link Car} instance and adds it to the managed list of cars.
+     *
+     * @return the {@link Car} instance representing the current vehicle the player is in
+     *
+     * @throws IllegalArgumentException if the player is not in a car
+     * @throws NullPointerException     if the player's vehicle or unique ID cannot be retrieved
+     */
     private Car getCurrentCar() {
         checkArgument(isInCar(), "Player is not in a car.");
 
@@ -44,18 +85,18 @@ public class CarService {
                 });
     }
 
-    public void executeOnCar(Function<Car> onCarFunction, Runnable elseRunnable) {
-        if (!isInCar()) {
-            elseRunnable.run();
-            return;
-        }
-
-        Car currentCar = getCurrentCar();
-        onCarFunction.apply(currentCar);
-    }
-
+    /**
+     * Functional interface representing an operation to be performed on a {@link Car}.
+     *
+     * @param <Car> the type of car the function operates on
+     */
     public interface Function<Car> {
 
+        /**
+         * Applies an operation to the given car.
+         *
+         * @param car the car to process
+         */
         void apply(Car car);
     }
 

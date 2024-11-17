@@ -92,8 +92,8 @@ public class CarMenuListener {
     /**
      * Retrieves the appropriate gear slot based on the provided key name. This method maps specific keys to their respective inventory
      * slots for controlling the car's direction in the game.
-     * <p>
-     * For example, pressing {@code W} will map to slot 39 (for moving forward), while {@code S} maps to slot 41 (for moving in
+     *
+     * <p>For example, pressing {@code W} will map to slot 39 (for moving forward), while {@code S} maps to slot 41 (for moving in
      * reverse). If the key does not match any predefined control keys, it defaults to slot 0, indicating no action should be taken.
      *
      * @param keyName The name of the key that was double-clicked (e.g., {@code W} or {@code S}).

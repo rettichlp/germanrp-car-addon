@@ -13,8 +13,8 @@ import static net.labymod.api.client.gui.screen.key.Key.W;
 /**
  * Represents an event triggered when a key is double-pressed within a specific interval. This event contains information about the key
  * involved and the time interval between the presses.
- * <p>
- * It also provides utility to check if the pressed key is relevant for car-related actions.
+ *
+ * <p>It also provides utility to check if the pressed key is relevant for car-related actions.
  *
  * @author RettichLP
  * @see Event
@@ -37,8 +37,8 @@ public class DoubleKeyPressEvent implements Event {
 
     /**
      * Determines if the double-pressed key is relevant for car-related controls.
-     * <p>
-     * Relevant keys are:
+     *
+     * <p>Relevant keys are:
      * <ul>
      *     <li>{@code W} - Typically used for forward movement.</li>
      *     <li>{@code S} - Typically used for backward movement.</li>
