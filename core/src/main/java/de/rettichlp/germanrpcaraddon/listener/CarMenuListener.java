@@ -41,8 +41,6 @@ public class CarMenuListener {
         }
 
         this.addon.carService().executeOnCar(car -> {
-            this.addon.debug("Car menu detected of car: " + car.toString());
-
             // Retrieve engine state through the size of the inventory (running = 54, off = 27)
             car.setEngineRunning(this.addon.carController().isRunning());
 
@@ -64,7 +62,6 @@ public class CarMenuListener {
 
                 // Get the gear slot and click it, then reset the last double click action key
                 int slot = getGearSlot(car.getScheduledGearChange());
-                this.addon.debug("Gear slot: " + slot);
                 car.setScheduledGearChange(""); // empty instead of null, because the container needs to be closed one more time
                 this.addon.minecraftController().inventoryClick(slot);
                 car.setGear(slot == 39 ? DRIVE : REVERSE);
