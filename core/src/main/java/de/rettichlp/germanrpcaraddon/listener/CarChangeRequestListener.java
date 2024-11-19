@@ -57,6 +57,7 @@ public class CarChangeRequestListener {
                         return;
                     }
 
+                    car.setScheduledEngineTurnOn(true);
                     car.setScheduledGearChange(keyName);
                 }
                 case "S" -> {
@@ -64,6 +65,7 @@ public class CarChangeRequestListener {
                         return;
                     }
 
+                    car.setScheduledEngineTurnOn(true);
                     car.setScheduledGearChange(keyName);
                 }
                 case "SPACE" -> car.setScheduledSirenChange(true);

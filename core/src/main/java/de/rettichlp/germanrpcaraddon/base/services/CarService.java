@@ -134,9 +134,14 @@ public class CarService {
         private boolean engineRunning = false;
 
         /**
-         * Indicates whether the car's siren should be changed.
+         * Indicates whether the car's engine should be turned on.
          */
-        private boolean scheduledSirenChange;
+        private boolean scheduledEngineTurnOn;
+
+        /**
+         * Indicates whether the car's engine should be turned off.
+         */
+        private boolean scheduledEngineTurnOff;
 
         /**
          * The key that was double-pressed to schedule a gear change.
@@ -144,9 +149,9 @@ public class CarService {
         private String scheduledGearChange;
 
         /**
-         * Indicates whether the car's engine should be turned off.
+         * Indicates whether the car's siren should be changed.
          */
-        private boolean scheduledEngineTurnOff;
+        private boolean scheduledSirenChange;
 
         /**
          * The gears of the car.

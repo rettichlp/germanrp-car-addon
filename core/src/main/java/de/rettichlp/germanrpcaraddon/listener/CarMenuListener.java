@@ -44,24 +44,37 @@ public class CarMenuListener {
             // Retrieve engine state through the size of the inventory (running = 54, off = 27)
             car.setEngineRunning(this.addon.carController().isRunning());
 
-            // Check if the gear should be changed
-            if (car.getScheduledGearChange() != null) {
-                // If this field is empty, close the container screen and reset the last double click action key without any further logic
-                if (car.getScheduledGearChange().isEmpty()) {
+            // If the car should be turned on and the car is running, reset the scheduled turn-on variable because the car is already running
+            if (car.isEngineRunning() && car.isScheduledEngineTurnOn()) {
+                car.setScheduledEngineTurnOn(false);
+                // Do not return here, because the gear might need to be changed
+            }
+
+            // If the car should be turned off and the car is not running, reset the scheduled turn-off variable because the car is off
+            if (!car.isEngineRunning() && car.isScheduledEngineTurnOff()) {
+                car.setScheduledEngineTurnOff(false);
+                return; // Return here, because the car is off and no further logic is needed/accepted
+            }
+
+            // Check if the car should be turned on and the car is not running
+            if (this.addon.configuration().pressToStart().get() && car.isScheduledEngineTurnOn() && !car.isEngineRunning()) {
+                // Start the engine
+                this.addon.minecraftController().inventoryClick(13);
+                return;
+            }
+
+            // If the car is running and the automatic gearbox is enabled, change the gear
+            String scheduledGearChange = car.getScheduledGearChange();
+            if (this.addon.configuration().automaticGearbox().get() && scheduledGearChange != null && car.isEngineRunning()) {
+                // If this field is empty, close the container screen and reset the scheduled gear change variable without any further logic
+                if (scheduledGearChange.isEmpty()) {
                     car.setScheduledGearChange(null);
                     this.addon.minecraftController().closeContainerScreen();
                     return;
                 }
 
-                // Check if the car is running
-                if (!car.isEngineRunning()) {
-                    // If the car is not running, start the engine first
-                    this.addon.minecraftController().inventoryClick(13);
-                    return;
-                }
-
-                // Get the gear slot and click it, then reset the last double click action key
-                int slot = getGearSlot(car.getScheduledGearChange());
+                // Get the gear slot and click it, then reset
+                int slot = getGearSlot(scheduledGearChange);
                 car.setScheduledGearChange(""); // empty instead of null, because the container needs to be closed one more time
                 this.addon.minecraftController().inventoryClick(slot);
                 car.setGear(slot == 39 ? DRIVE : REVERSE);
@@ -77,14 +90,6 @@ public class CarMenuListener {
                 // Click the slot and reset the change siren variable
                 car.setScheduledSirenChange(false);
                 this.addon.minecraftController().inventoryClick(slot);
-                return;
-            }
-
-            // Check if the car should be turned off
-            if (car.isScheduledEngineTurnOff()) {
-                // The car should be turned off, click the slot and reset the turn off variable
-                car.setScheduledEngineTurnOff(false);
-                this.addon.minecraftController().inventoryClick(13);
             }
         }, () -> {});
     }

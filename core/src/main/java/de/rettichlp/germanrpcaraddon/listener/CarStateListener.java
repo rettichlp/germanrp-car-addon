@@ -80,6 +80,10 @@ public class CarStateListener {
             if (enginePatternMatcher.matches()) {
                 boolean engineRunning = enginePatternMatcher.group("state").equals("gestartet");
                 car.setEngineRunning(engineRunning);
+
+                if (!engineRunning) {
+                    car.setGear(PARK);
+                }
             }
         }, () -> {});
     }
