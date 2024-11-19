@@ -68,8 +68,8 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
 
     @Override
     protected void enable() {
-        this.carController = ((DefaultReferenceStorage) this.referenceStorageAccessor()).getCarController();
-        this.minecraftController = ((DefaultReferenceStorage) this.referenceStorageAccessor()).getMinecraftController();
+        this.carController = ((DefaultReferenceStorage) this.referenceStorageAccessor()).carController();
+        this.minecraftController = ((DefaultReferenceStorage) this.referenceStorageAccessor()).minecraftController();
 
         this.carService = new CarService(this);
 
