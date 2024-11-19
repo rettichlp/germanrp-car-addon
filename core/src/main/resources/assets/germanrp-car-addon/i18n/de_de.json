@@ -1,0 +1,33 @@
+{
+  "germanrp-car-addon": {
+    "settings": {
+      "header": {
+        "comfort-systems": {
+          "name": "Komfort Systeme"
+        },
+        "assistance-systems": {
+          "name": "Assistenz Systeme"
+        },
+        "development": {
+          "name": "Entwicklertools"
+        }
+      },
+      "enabled": {
+        "name": "Aktiv",
+        "description": "Aktiviert oder deaktiviert das Addon"
+      },
+      "pressToStart": {
+        "name": "Push to Start",
+        "description": "Wenn aktiviert, kannst du das Auto mit einem Doppelklick deiner Vorwärts-Taste starten. Anschließend wird das Menü des Autos angezeigt"
+      },
+      "automaticGearbox": {
+        "name": "Automatik Getriebe",
+        "description": "Wenn aktiviert, kannst du das Auto mit einem Doppelklick deiner Vorwärts-Taste in den DRIVE Gang und mit einem Doppelklick deiner Rückwärts-Taste in den REVERSE Gang setzen. Wenn diese Einstellung mit der Push to Start Einstellung kombiniert ist, startet das Auto direkt und wechselt in den entsprechenden Gang"
+      },
+      "debug": {
+        "name": "Debug",
+        "description": "Aktiviert den Debug Modus\n\nWenn du nicht weißt was dies tut, dann frag nicht und schalte es wirklich auf gar keinen fall an..."
+      }
+    }
+  }
+}
