@@ -6,6 +6,7 @@ import de.rettichlp.germanrpcaraddon.events.keypress.DoubleBackKeyPressEvent;
 import de.rettichlp.germanrpcaraddon.events.keypress.DoubleForwardKeyPressEvent;
 import de.rettichlp.germanrpcaraddon.events.keypress.DoubleJumpKeyPressEvent;
 import de.rettichlp.germanrpcaraddon.events.keypress.SneakKeyPressEvent;
+import de.rettichlp.germanrpcaraddon.events.keypress.SprintKeyPressEvent;
 import lombok.RequiredArgsConstructor;
 import net.labymod.api.event.Subscribe;
 
@@ -87,7 +88,7 @@ public class CarChangeRequestListener {
     public void onDoubleJumpKeyPress(DoubleJumpKeyPressEvent event) {
         // Check if the player is in a car
         this.addon.carService().executeOnCar(car -> {
-            car.setScheduledSirenChange(true);
+            car.setScheduledBlueLightChange(true);
 
             // Press the key to swap the offhand, it is the key to open the car inventory
             this.addon.minecraftController().pressSwapOffhandKey();
@@ -110,6 +111,26 @@ public class CarChangeRequestListener {
             // Cancel the event to prevent the player from leaving the car before the engine is turned off
             event.setCancelled(true);
             car.setScheduledEngineTurnOff(true);
+
+            // Press the key to swap the offhand, it is the key to open the car inventory
+            this.addon.minecraftController().pressSwapOffhandKey();
+        }, () -> {});
+    }
+
+    /**
+     * Handles sprint key press to manage car-related actions.
+     *
+     * @param event the sprint key press event containing the key pressed
+     */
+    @Subscribe
+    public void onSprintKeyPress(SprintKeyPressEvent event) {
+        // Check if the player is in a car
+        this.addon.carService().executeOnCar(car -> {
+            if (!car.isEngineRunning() || !car.isEmergencyLights() || !car.isEmergencyLightsEnabled()) {
+                return;
+            }
+
+            car.setScheduledSirenChange(true);
 
             // Press the key to swap the offhand, it is the key to open the car inventory
             this.addon.minecraftController().pressSwapOffhandKey();

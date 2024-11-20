@@ -151,7 +151,12 @@ public class CarService {
         private Gear scheduledGearChange;
 
         /**
-         * Indicates whether the car's siren should be changed.
+         * Indicates whether the car's blue light should be changed.
+         */
+        private boolean scheduledBlueLightChange;
+
+        /**
+         * Indicates whether the car's siren sound should be changed.
          */
         private boolean scheduledSirenChange;
 

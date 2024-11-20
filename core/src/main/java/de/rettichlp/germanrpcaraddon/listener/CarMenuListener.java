@@ -84,15 +84,22 @@ public class CarMenuListener {
                 return;
             }
 
-            // Check if the siren should be changed
-            if (car.isScheduledSirenChange()) {
+            // Check if the blue light should be toggled
+            if (car.isScheduledBlueLightChange()) {
                 // The siren can be changed if the car is running and also if not - the slot is different for both cases
                 boolean running = car.isEngineRunning();
                 int slot = running ? 24 : 15;
 
                 // Click the slot and reset the change siren variable
-                car.setScheduledSirenChange(false);
+                car.setScheduledBlueLightChange(false);
                 this.addon.minecraftController().inventoryClick(slot);
+                return;
+            }
+
+            // Check if the siren should be changed
+            if (car.isScheduledSirenChange() && car.isEngineRunning()) {
+                this.addon.minecraftController().inventoryClick(23, 1);
+                car.setScheduledSirenChange(false);
             }
         }, () -> {});
     }
