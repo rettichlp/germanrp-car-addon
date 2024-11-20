@@ -50,10 +50,14 @@ public class CarMenuListener {
                 // Do not return here, because the gear might need to be changed
             }
 
-            // If the car should be turned off and the car is not running, reset the scheduled turn-off variable because the car is off
-            if (!car.isEngineRunning() && car.isScheduledEngineTurnOff()) {
+            // If the car should be turned off and the car is running, turn off the engine. Reset the scheduled turn-off variable afterwards.
+            if (car.isScheduledEngineTurnOff()) {
+                if (car.isEngineRunning()) {
+                    this.addon.minecraftController().inventoryClick(13);
+                }
+
                 car.setScheduledEngineTurnOff(false);
-                return; // Return here, because the car is off and no further logic is needed/accepted
+                return;
             }
 
             // Check if the car should be turned on and the car is not running
