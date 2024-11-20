@@ -1,8 +1,10 @@
 package de.rettichlp.germanrpcaraddon.base.services;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import net.labymod.api.client.entity.Entity;
 
 import java.util.HashSet;
@@ -146,7 +148,7 @@ public class CarService {
         /**
          * The key that was double-pressed to schedule a gear change.
          */
-        private String scheduledGearChange;
+        private Gear scheduledGearChange;
 
         /**
          * Indicates whether the car's siren should be changed.
@@ -154,12 +156,18 @@ public class CarService {
         private boolean scheduledSirenChange;
 
         /**
-         * The gears of the car.
+         * The gears of the car with their respective inventory slots.
          */
+        @Getter
+        @AllArgsConstructor
         public enum Gear {
-            PARK,
-            DRIVE,
-            REVERSE
+
+            PARK(-1),
+            DRIVE(39),
+            REVERSE(41),
+            NONE(-1);
+
+            private final int slot;
         }
     }
 }

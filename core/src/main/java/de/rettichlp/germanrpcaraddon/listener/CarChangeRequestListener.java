@@ -1,15 +1,16 @@
 package de.rettichlp.germanrpcaraddon.listener;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
-import de.rettichlp.germanrpcaraddon.events.DoubleKeyPressEvent;
+import de.rettichlp.germanrpcaraddon.events.keypress.AbstractDoubleKeyPressEvent;
+import de.rettichlp.germanrpcaraddon.events.keypress.DoubleBackKeyPressEvent;
+import de.rettichlp.germanrpcaraddon.events.keypress.DoubleForwardKeyPressEvent;
+import de.rettichlp.germanrpcaraddon.events.keypress.DoubleJumpKeyPressEvent;
+import de.rettichlp.germanrpcaraddon.events.keypress.SneakKeyPressEvent;
 import lombok.RequiredArgsConstructor;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.input.KeyEvent;
 
 import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.DRIVE;
 import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.REVERSE;
-import static net.labymod.api.client.gui.screen.key.Key.L_SHIFT;
-import static net.labymod.api.event.client.input.KeyEvent.State.PRESS;
 
 /**
  * Listener for handling double key press events relevant to car actions. This listener processes specific keys ({@code W}, {@code S},
@@ -17,10 +18,9 @@ import static net.labymod.api.event.client.input.KeyEvent.State.PRESS;
  *
  * <p>The logic checks:
  * <ul>
- *     <li>Whether the pressed key is relevant for car controls, using {@link DoubleKeyPressEvent#isCarRelevantKey()}.</li>
  *     <li>Whether the player is currently in a car, determined by the {@link de.rettichlp.germanrpcaraddon.base.services.CarService}.</li>
  * </ul>
- * Based on the key pressed:
+ * Based on the key pressed (example with default settings):
  * <ul>
  *     <li>{@code W} - Schedules a gear change to {@code DRIVE} if not already in {@code DRIVE}.</li>
  *     <li>{@code S} - Schedules a gear change to {@code REVERSE} if not already in {@code REVERSE}.</li>
@@ -29,7 +29,7 @@ import static net.labymod.api.event.client.input.KeyEvent.State.PRESS;
  * After handling the key action, the "swap offhand" key is pressed to open the car inventory.
  *
  * @author RettichLP
- * @see DoubleKeyPressEvent
+ * @see AbstractDoubleKeyPressEvent
  */
 @RequiredArgsConstructor
 public class CarChangeRequestListener {
@@ -37,39 +37,20 @@ public class CarChangeRequestListener {
     private final GermanRPCarAddon addon;
 
     /**
-     * Handles double key press events to manage car-related actions.
+     * Handles double back key press to manage car-related actions.
      *
-     * @param event the double key press event containing the key pressed and interval details
+     * @param event the double back key press event containing the key pressed and interval details
      */
     @Subscribe
-    public void onDoubleKey(DoubleKeyPressEvent event) {
-        // Check if the key is relevant for the car
-        if (!event.isCarRelevantKey()) {
-            return;
-        }
-
+    public void onDoubleBackKeyPress(DoubleBackKeyPressEvent event) {
         // Check if the player is in a car
         this.addon.carService().executeOnCar(car -> {
-            String keyName = event.key().getName();
-            switch (keyName) {
-                case "W" -> {
-                    if (car.getGear() == DRIVE) {
-                        return;
-                    }
-
-                    car.setScheduledEngineTurnOn(true);
-                    car.setScheduledGearChange(keyName);
-                }
-                case "S" -> {
-                    if (car.getGear() == REVERSE) {
-                        return;
-                    }
-
-                    car.setScheduledEngineTurnOn(true);
-                    car.setScheduledGearChange(keyName);
-                }
-                case "SPACE" -> car.setScheduledSirenChange(true);
+            if (car.getGear() == REVERSE) {
+                return;
             }
+
+            car.setScheduledEngineTurnOn(true);
+            car.setScheduledGearChange(REVERSE);
 
             // Press the key to swap the offhand, it is the key to open the car inventory
             this.addon.minecraftController().pressSwapOffhandKey();
@@ -77,17 +58,49 @@ public class CarChangeRequestListener {
     }
 
     /**
-     * Handles key press events to manage car-related actions.
+     * Handles double forward key press to manage car-related actions.
      *
-     * @param event the key press event containing the key pressed and state details
+     * @param event the double forward key press event containing the key pressed and interval details
      */
     @Subscribe
-    public void onKey(KeyEvent event) {
-        // Check if the key is the leave key
-        if (event.state() != PRESS || !event.key().equals(L_SHIFT)) {
-            return;
-        }
+    public void onDoubleForwardKeyPress(DoubleForwardKeyPressEvent event) {
+        // Check if the player is in a car
+        this.addon.carService().executeOnCar(car -> {
+            if (car.getGear() == DRIVE) {
+                return;
+            }
 
+            car.setScheduledEngineTurnOn(true);
+            car.setScheduledGearChange(DRIVE);
+
+            // Press the key to swap the offhand, it is the key to open the car inventory
+            this.addon.minecraftController().pressSwapOffhandKey();
+        }, () -> {});
+    }
+
+    /**
+     * Handles double jump key press to manage car-related actions.
+     *
+     * @param event the double jump key press event containing the key pressed and interval details
+     */
+    @Subscribe
+    public void onDoubleJumpKeyPress(DoubleJumpKeyPressEvent event) {
+        // Check if the player is in a car
+        this.addon.carService().executeOnCar(car -> {
+            car.setScheduledSirenChange(true);
+
+            // Press the key to swap the offhand, it is the key to open the car inventory
+            this.addon.minecraftController().pressSwapOffhandKey();
+        }, () -> {});
+    }
+
+    /**
+     * Handles sneak key press to manage car-related actions.
+     *
+     * @param event the sneak key press event containing the key pressed
+     */
+    @Subscribe
+    public void onSneakKeyPress(SneakKeyPressEvent event) {
         // Check if the player is in a car
         this.addon.carService().executeOnCar(car -> {
             if (!car.isEngineRunning()) {

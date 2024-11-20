@@ -1,12 +1,12 @@
 package de.rettichlp.germanrpcaraddon.listener;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
+import de.rettichlp.germanrpcaraddon.base.services.CarService;
 import de.rettichlp.germanrpcaraddon.events.ScreenUpdateEvent;
 import lombok.RequiredArgsConstructor;
 import net.labymod.api.event.Subscribe;
 
-import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.DRIVE;
-import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.REVERSE;
+import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.NONE;
 
 /**
  * Listener for handling screen updates related to the car inventory menu. This listener detects when the player interacts with the
@@ -68,20 +68,19 @@ public class CarMenuListener {
             }
 
             // If the car is running and the automatic gearbox is enabled, change the gear
-            String scheduledGearChange = car.getScheduledGearChange();
+            CarService.Car.Gear scheduledGearChange = car.getScheduledGearChange();
             if (this.addon.configuration().automaticGearbox().get() && scheduledGearChange != null && car.isEngineRunning()) {
-                // If this field is empty, close the container screen and reset the scheduled gear change variable without any further logic
-                if (scheduledGearChange.isEmpty()) {
+                // If this field is NONE, close the container screen and reset the scheduled gear change variable without any further logic
+                if (scheduledGearChange == NONE) {
                     car.setScheduledGearChange(null);
                     this.addon.minecraftController().closeContainerScreen();
                     return;
                 }
 
-                // Get the gear slot and click it, then reset
-                int slot = getGearSlot(scheduledGearChange);
-                car.setScheduledGearChange(""); // empty instead of null, because the container needs to be closed one more time
-                this.addon.minecraftController().inventoryClick(slot);
-                car.setGear(slot == 39 ? DRIVE : REVERSE);
+                // Get the gear slot and click it, then reset the scheduled gear change variable
+                car.setScheduledGearChange(NONE); // NONE instead of null, because the container needs to be closed one more time
+                this.addon.minecraftController().inventoryClick(scheduledGearChange.getSlot());
+                car.setGear(scheduledGearChange);
                 return;
             }
 
@@ -96,25 +95,5 @@ public class CarMenuListener {
                 this.addon.minecraftController().inventoryClick(slot);
             }
         }, () -> {});
-    }
-
-    /**
-     * Retrieves the appropriate gear slot based on the provided key name. This method maps specific keys to their respective inventory
-     * slots for controlling the car's direction in the game.
-     *
-     * <p>For example, pressing {@code W} will map to slot 39 (for moving forward), while {@code S} maps to slot 41 (for moving in
-     * reverse). If the key does not match any predefined control keys, it defaults to slot 0, indicating no action should be taken.
-     *
-     * @param keyName The name of the key that was double-clicked (e.g., {@code W} or {@code S}).
-     *
-     * @return The corresponding gear slot in the inventory; defaults to 0 if no match is found.
-     */
-    private int getGearSlot(String keyName) {
-        // slot 39 = forward, slot 41 = reverse
-        return switch (keyName) {
-            case "W" -> 39;
-            case "S" -> 41;
-            default -> 0;
-        };
     }
 }

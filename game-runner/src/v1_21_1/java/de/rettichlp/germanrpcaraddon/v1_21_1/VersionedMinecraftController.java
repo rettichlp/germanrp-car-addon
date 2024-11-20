@@ -1,6 +1,7 @@
 package de.rettichlp.germanrpcaraddon.v1_21_1;
 
 import de.rettichlp.germanrpcaraddon.controllers.MinecraftController;
+import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.client.options.MinecraftInputMapping;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static com.mojang.blaze3d.platform.InputConstants.getKey;
 import static it.unimi.dsi.fastutil.ints.Int2ObjectMaps.EMPTY_MAP;
+import static java.util.Arrays.stream;
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static net.minecraft.client.KeyMapping.click;
@@ -86,5 +88,16 @@ public class VersionedMinecraftController implements MinecraftController {
     public void closeContainerScreen() {
         assert mc.player != null;
         mc.player.closeContainer();
+    }
+
+    @Override
+    public Key getKeyMapping(String optionName) throws IllegalArgumentException {
+        return stream(mc.options.keyMappings)
+                .filter(keyMapping -> keyMapping.getName().equals("key." + optionName))
+                .findAny()
+                .map(keyMapping -> ((MinecraftInputMapping) keyMapping))
+                .map(MinecraftInputMapping::getKeyCode)
+                .map(Key::get)
+                .orElseThrow(() -> new IllegalArgumentException("Key mapping not found"));
     }
 }

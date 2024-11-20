@@ -1,5 +1,6 @@
 package de.rettichlp.germanrpcaraddon.controllers;
 
+import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.reference.annotation.Referenceable;
 
 import java.util.List;
@@ -79,4 +80,49 @@ public interface MinecraftController {
      * <p>This method simulates the player closing the inventory or container UI, typically by pressing the "Escape" key.
      */
     void closeContainerScreen();
+
+    /**
+     * Retrieves the key for the mapped key option name. Example minecraft mapping:
+     * <table>
+     *     <tr><td>key.attack</td><td>key.keyboard.0</tr>
+     *     <tr><td>key.use</td><td>key.keyboard.1</tr>
+     *     <tr><td>key.forward</td><td>key.keyboard.w</tr>
+     *     <tr><td>key.left</td><td>key.keyboard.a</tr>
+     *     <tr><td>key.back</td><td>key.keyboard.s</tr>
+     *     <tr><td>key.right</td><td>key.keyboard.d</tr>
+     *     <tr><td>key.jump</td><td>key.keyboard.space</tr>
+     *     <tr><td>key.sneak</td><td>key.keyboard.left.shift</tr>
+     *     <tr><td>key.sprint</td><td>key.keyboard.f</tr>
+     *     <tr><td>key.drop</td><td>key.keyboard.q</tr>
+     *     <tr><td>key.inventory</td><td>key.keyboard.e</tr>
+     *     <tr><td>key.chat</td><td>key.keyboard.t</tr>
+     *     <tr><td>key.playerlist</td><td>key.keyboard.tab</tr>
+     *     <tr><td>key.pickItem</td><td>key.keyboard.2</tr>
+     *     <tr><td>key.command</td><td>key.keyboard.backslash</tr>
+     *     <tr><td>key.socialInteractions</td><td>key.keyboard.p</tr>
+     *     <tr><td>key.screenshot</td><td>key.keyboard.f2</tr>
+     *     <tr><td>key.togglePerspective</td><td>key.keyboard.f5</tr>
+     *     <tr><td>key.smoothCamera</td><td>scancode.-1</tr>
+     *     <tr><td>key.fullscreen</td><td>key.keyboard.f11</tr>
+     *     <tr><td>key.spectatorOutlines</td><td>scancode.-1</tr>
+     *     <tr><td>key.swapOffhand</td><td>key.keyboard.r</tr>
+     *     <tr><td>key.saveToolbarActivator</td><td>key.keyboard.c</tr>
+     *     <tr><td>key.loadToolbarActivator</td><td>key.keyboard.x</tr>
+     *     <tr><td>key.advancements</td><td>key.keyboard.l</tr>
+     *     <tr><td>key.hotbar.1</td><td>key.keyboard.1</tr>
+     *     <tr><td>key.hotbar.2</td><td>key.keyboard.2</tr>
+     *     <tr><td>key.hotbar.3</td><td>key.keyboard.3</tr>
+     *     <tr><td>key.hotbar.4</td><td>key.keyboard.4</tr>
+     *     <tr><td>key.hotbar.5</td><td>key.keyboard.5</tr>
+     *     <tr><td>key.hotbar.6</td><td>key.keyboard.6</tr>
+     *     <tr><td>key.hotbar.7</td><td>key.keyboard.7</tr>
+     *     <tr><td>key.hotbar.8</td><td>key.keyboard.8</tr>
+     *     <tr><td>key.hotbar.9</td><td>key.keyboard.9</tr>
+     * </table>
+     *
+     * @param optionName the name of the key option to retrieve the mapping for, e.g. "swapOffhand"
+     *
+     * @return the key for the mapped option name
+     */
+    Key getKeyMapping(String optionName) throws IllegalArgumentException;
 }
