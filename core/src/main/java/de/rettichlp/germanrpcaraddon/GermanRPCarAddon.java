@@ -6,10 +6,10 @@ import de.rettichlp.germanrpcaraddon.base.services.CarService;
 import de.rettichlp.germanrpcaraddon.controllers.CarController;
 import de.rettichlp.germanrpcaraddon.controllers.MinecraftController;
 import de.rettichlp.germanrpcaraddon.core.generated.DefaultReferenceStorage;
-import de.rettichlp.germanrpcaraddon.listener.CarChangeRequestListener;
-import de.rettichlp.germanrpcaraddon.listener.CarEnterListener;
-import de.rettichlp.germanrpcaraddon.listener.CarMenuListener;
-import de.rettichlp.germanrpcaraddon.listener.CarStateListener;
+import de.rettichlp.germanrpcaraddon.listener.car.CarInputListener;
+import de.rettichlp.germanrpcaraddon.listener.EntityVehicleListener;
+import de.rettichlp.germanrpcaraddon.listener.car.CarMenuListener;
+import de.rettichlp.germanrpcaraddon.listener.car.CarMessageListener;
 import de.rettichlp.germanrpcaraddon.listener.KeyPressListener;
 import de.rettichlp.germanrpcaraddon.listener.ScreenUpdateListener;
 import lombok.Getter;
@@ -76,10 +76,10 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
 
         this.registerSettingCategory();
 
-        this.registerListener(new CarChangeRequestListener(this));
-        this.registerListener(new CarEnterListener(this));
+        this.registerListener(new CarInputListener(this));
         this.registerListener(new CarMenuListener(this));
-        this.registerListener(new CarStateListener(this));
+        this.registerListener(new CarMessageListener(this));
+        this.registerListener(new EntityVehicleListener(this));
         this.registerListener(new KeyPressListener(this));
         this.registerListener(new ScreenUpdateListener(this));
 

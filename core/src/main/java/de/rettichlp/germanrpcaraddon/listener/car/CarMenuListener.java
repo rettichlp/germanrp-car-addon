@@ -1,4 +1,4 @@
-package de.rettichlp.germanrpcaraddon.listener;
+package de.rettichlp.germanrpcaraddon.listener.car;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
 import de.rettichlp.germanrpcaraddon.base.services.CarService;

@@ -1,4 +1,4 @@
-package de.rettichlp.germanrpcaraddon.listener;
+package de.rettichlp.germanrpcaraddon.listener.car;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ import static net.labymod.api.client.component.serializer.plain.PlainTextCompone
  * @see ActionBarReceiveEvent
  */
 @RequiredArgsConstructor
-public class CarStateListener {
+public class CarMessageListener {
 
     /**
      * Regex pattern for detecting emergency lights status from chat messages. Matches messages indicating whether emergency lights are

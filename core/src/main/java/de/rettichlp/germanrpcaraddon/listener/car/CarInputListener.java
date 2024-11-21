@@ -1,6 +1,8 @@
-package de.rettichlp.germanrpcaraddon.listener;
+package de.rettichlp.germanrpcaraddon.listener.car;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
+import de.rettichlp.germanrpcaraddon.GermanRPCarAddonConfiguration;
+import de.rettichlp.germanrpcaraddon.events.VehicleEvent;
 import de.rettichlp.germanrpcaraddon.events.keypress.AbstractDoubleKeyPressEvent;
 import de.rettichlp.germanrpcaraddon.events.keypress.DoubleBackKeyPressEvent;
 import de.rettichlp.germanrpcaraddon.events.keypress.DoubleForwardKeyPressEvent;
@@ -12,28 +14,17 @@ import net.labymod.api.event.Subscribe;
 
 import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.DRIVE;
 import static de.rettichlp.germanrpcaraddon.base.services.CarService.Car.Gear.REVERSE;
+import static de.rettichlp.germanrpcaraddon.events.VehicleEvent.Phase.ENTER;
 
 /**
- * Listener for handling double key press events relevant to car actions. This listener processes specific keys ({@code W}, {@code S},
- * {@code SPACE}) to schedule gear or siren changes for a car when the player is inside one.
- *
- * <p>The logic checks:
- * <ul>
- *     <li>Whether the player is currently in a car, determined by the {@link de.rettichlp.germanrpcaraddon.base.services.CarService}.</li>
- * </ul>
- * Based on the key pressed (example with default settings):
- * <ul>
- *     <li>{@code W} - Schedules a gear change to {@code DRIVE} if not already in {@code DRIVE}.</li>
- *     <li>{@code S} - Schedules a gear change to {@code REVERSE} if not already in {@code REVERSE}.</li>
- *     <li>{@code SPACE} - Schedules a siren state change.</li>
- * </ul>
- * After handling the key action, the "swap offhand" key is pressed to open the car inventory.
+ * Listener for handling actions regarding the car by the player. This listener detects key presses (e.g., {@code W}, {@code S}, or {@code SPACE}) to schedule gear or siren changes for a car when the player is inside one. Also handles vehicle enter and leave events to manage car-related actions.
+ * <p>After handling the actions, almost always the "swap offhand" key is pressed to open the car inventory.
  *
  * @author RettichLP
  * @see AbstractDoubleKeyPressEvent
  */
 @RequiredArgsConstructor
-public class CarChangeRequestListener {
+public class CarInputListener {
 
     private final GermanRPCarAddon addon;
 
@@ -135,5 +126,36 @@ public class CarChangeRequestListener {
             // Press the key to swap the offhand, it is the key to open the car inventory
             this.addon.minecraftController().pressSwapOffhandKey();
         }, () -> {});
+    }
+
+    /**
+     * Handles vehicle events to manage car-related actions.
+     *
+     * @param event the vehicle event containing the vehicle entity and phase
+     */
+    @Subscribe
+    public void onVehicleEvent(VehicleEvent event) {
+        // Only handle vehicle enter events
+        GermanRPCarAddonConfiguration configuration = this.addon.configuration();
+        if (configuration.remoteEngineStart().get() && event.phase() == ENTER) {
+            this.addon.carService().executeOnCar(car -> {
+                // Schedule actions for the car when the player enters it
+
+                // Turn on the engine if the player enters the car
+                if (configuration.pressToStart().get()) {
+                    car.setScheduledEngineTurnOn(true);
+                }
+
+                // Set the gear to drive if the automatic gearbox is enabled (and the engine is running)
+                if (configuration.automaticGearbox().get()) {
+                    car.setScheduledGearChange(DRIVE);
+                }
+
+                //TODO enable blue light and siren if the player has an active emergency mission
+
+                // Press the key to swap the offhand, it is the key to open the car inventory
+                this.addon.minecraftController().pressSwapOffhandKey();
+            }, () -> {});
+        }
     }
 }

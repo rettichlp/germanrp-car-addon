@@ -21,21 +21,13 @@ import static net.labymod.api.Laby.fireEvent;
 import static net.labymod.api.Laby.labyAPI;
 
 /**
- * Listener for handling car enter events. This listener detects when the player enters a vehicle and schedules actions for the car.
- * The main responsibility is to turn on the engine and set the gear to drive when the player enters a car.
- *
- * <p>When the player enters a car, the following actions are scheduled:
- * <ul>
- *     <li>Turn on the engine.</li>
- *     <li>Set the gear to drive.</li>
- *     <li>Press the key to swap the offhand, which opens the car inventory.</li>
- * </ul>
+ * Listener for handling car enter events. This listener detects when the player enters a vehicle and fires a corresponding event.
  *
  * @author RettichLP
  * @see VehicleEvent
  */
 @RequiredArgsConstructor
-public class CarEnterListener {
+public class EntityVehicleListener {
 
     private final GermanRPCarAddon addon;
 
@@ -67,36 +59,5 @@ public class CarEnterListener {
 
             this.lastVehicleUniqueId = uniqueId;
         });
-    }
-
-    /**
-     * Handles vehicle events to manage car-related actions.
-     *
-     * @param event the vehicle event containing the vehicle entity and phase
-     */
-    @Subscribe
-    public void onVehicleEvent(VehicleEvent event) {
-        // Only handle vehicle enter events
-        GermanRPCarAddonConfiguration configuration = this.addon.configuration();
-        if (configuration.remoteEngineStart().get() && event.phase() == ENTER) {
-            this.addon.carService().executeOnCar(car -> {
-                // Schedule actions for the car when the player enters it
-
-                // Turn on the engine if the player enters the car
-                if (configuration.pressToStart().get()) {
-                    car.setScheduledEngineTurnOn(true);
-                }
-
-                // Set the gear to drive if the automatic gearbox is enabled (and the engine is running)
-                if (configuration.automaticGearbox().get()) {
-                    car.setScheduledGearChange(DRIVE);
-                }
-
-                //TODO enable blue light and siren if the player has an active emergency mission
-
-                // Press the key to swap the offhand, it is the key to open the car inventory
-                this.addon.minecraftController().pressSwapOffhandKey();
-            }, () -> {});
-        }
     }
 }
