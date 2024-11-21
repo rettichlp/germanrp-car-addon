@@ -24,6 +24,10 @@
         "name": "Automatic gearbox",
         "description": "When enabled, double-clicking your button to move forward will put the car in DRIVE gear, and double-clicking your button to move backward will put the car in REVERSE gear. When combined with Push to start, the car will start and shift directly into the specific gear"
       },
+      "remoteEngineStart": {
+        "name": "Remote engine start",
+        "description": "When enabled, the Push to start and Automatic gearbox functions are applied as soon as you get into the car. However, if only one of the two options is active, this will be taken into account and only this one will be executed.          Wenn aktiviert, werden die Push to Start und Automatik Getriebe Funktionen angewendet sobald du in das Auto steigst. Sollte von den beiden Optionen allerdings nur eine aktiv sein, wird dies berücksichtigt und dementsprechend nur diese ausgeführt."
+      },
       "debug": {
         "name": "Debug",
         "description": "Enable debug mode\n\nIf you don't know what this does, don't ask and don't enable it under any circumstances..."

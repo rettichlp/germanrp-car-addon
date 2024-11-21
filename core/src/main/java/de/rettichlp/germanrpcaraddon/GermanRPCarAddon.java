@@ -7,6 +7,7 @@ import de.rettichlp.germanrpcaraddon.controllers.CarController;
 import de.rettichlp.germanrpcaraddon.controllers.MinecraftController;
 import de.rettichlp.germanrpcaraddon.core.generated.DefaultReferenceStorage;
 import de.rettichlp.germanrpcaraddon.listener.CarChangeRequestListener;
+import de.rettichlp.germanrpcaraddon.listener.CarEnterListener;
 import de.rettichlp.germanrpcaraddon.listener.CarMenuListener;
 import de.rettichlp.germanrpcaraddon.listener.CarStateListener;
 import de.rettichlp.germanrpcaraddon.listener.KeyPressListener;
@@ -76,6 +77,7 @@ public class GermanRPCarAddon extends LabyAddon<GermanRPCarAddonConfiguration> {
         this.registerSettingCategory();
 
         this.registerListener(new CarChangeRequestListener(this));
+        this.registerListener(new CarEnterListener(this));
         this.registerListener(new CarMenuListener(this));
         this.registerListener(new CarStateListener(this));
         this.registerListener(new KeyPressListener(this));

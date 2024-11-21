@@ -28,7 +28,11 @@ public class GermanRPCarAddonConfiguration extends AddonConfig {
     @SwitchSetting
     private final ConfigProperty<Boolean> automaticGearbox = new ConfigProperty<>(true);
 
+    @SwitchSetting
+    private final ConfigProperty<Boolean> remoteEngineStart = new ConfigProperty<>(true);
+
     @SettingSection("assistance-systems")
+    //@SwitchSetting
     private final ConfigProperty<Boolean> automaticEmergencyBraking = new ConfigProperty<>(true);
 
     @SettingSection("development")
