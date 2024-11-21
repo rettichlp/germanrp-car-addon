@@ -1,6 +1,7 @@
 package de.rettichlp.germanrpcaraddon.listener;
 
 import de.rettichlp.germanrpcaraddon.GermanRPCarAddon;
+import de.rettichlp.germanrpcaraddon.GermanRPCarAddonConfiguration;
 import de.rettichlp.germanrpcaraddon.events.VehicleEvent;
 import lombok.RequiredArgsConstructor;
 import net.labymod.api.client.entity.Entity;
@@ -76,11 +77,22 @@ public class CarEnterListener {
     @Subscribe
     public void onVehicleEvent(VehicleEvent event) {
         // Only handle vehicle enter events
-        if (event.phase() == ENTER) {
+        GermanRPCarAddonConfiguration configuration = this.addon.configuration();
+        if (configuration.remoteEngineStart().get() && event.phase() == ENTER) {
             this.addon.carService().executeOnCar(car -> {
                 // Schedule actions for the car when the player enters it
-                car.setScheduledEngineTurnOn(true);
-                car.setScheduledGearChange(DRIVE);
+
+                // Turn on the engine if the player enters the car
+                if (configuration.pressToStart().get()) {
+                    car.setScheduledEngineTurnOn(true);
+                }
+
+                // Set the gear to drive if the automatic gearbox is enabled (and the engine is running)
+                if (configuration.automaticGearbox().get()) {
+                    car.setScheduledGearChange(DRIVE);
+                }
+
+                //TODO enable blue light and siren if the player has an active emergency mission
 
                 // Press the key to swap the offhand, it is the key to open the car inventory
                 this.addon.minecraftController().pressSwapOffhandKey();

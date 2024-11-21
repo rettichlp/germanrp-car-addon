@@ -14,23 +14,23 @@
       },
       "enabled": {
         "name": "Enabled",
-        "description": "Enable or disable the addon"
+        "description": "Enable or disable the addon."
       },
       "pressToStart": {
-        "name": "Push to start",
-        "description": "When enabled, the car can be started by double-clicking your button to move forward, and then displays the screen to adjust gear and other things"
+        "name": "Press-To-Start",
+        "description": "When enabled, the car can be started by double-clicking your button to move forward, and then displays the vehicle menu screen."
       },
       "automaticGearbox": {
         "name": "Automatic gearbox",
-        "description": "When enabled, double-clicking your button to move forward will put the car in DRIVE gear, and double-clicking your button to move backward will put the car in REVERSE gear. When combined with Push to start, the car will start and shift directly into the specific gear"
+        "description": "When enabled, double-clicking your button to move forward will put the car in DRIVE gear, and double-clicking your button to move backward will put the car in REVERSE gear. When combined with Press-To-Start, the car will start and shift directly into the specific gear."
       },
       "remoteEngineStart": {
         "name": "Remote engine start",
-        "description": "When enabled, the Push to start and Automatic gearbox functions are applied as soon as you get into the car. However, if only one of the two options is active, this will be taken into account and only this one will be executed.          Wenn aktiviert, werden die Push to Start und Automatik Getriebe Funktionen angewendet sobald du in das Auto steigst. Sollte von den beiden Optionen allerdings nur eine aktiv sein, wird dies berücksichtigt und dementsprechend nur diese ausgeführt."
+        "description": "When enabled, the Press-To-Start and Automatic gearbox functions are applied as soon as you get into the car. However, if only one of the two options is active, this will be taken into account and only this one will be executed. If neither option is activated, only the vehicle menu opens."
       },
       "debug": {
         "name": "Debug",
-        "description": "Enable debug mode\n\nIf you don't know what this does, don't ask and don't enable it under any circumstances..."
+        "description": "Enable debug mode.\n\nIf you don't know what this does, don't ask and don't enable it under any circumstances..."
       }
     }
   }
