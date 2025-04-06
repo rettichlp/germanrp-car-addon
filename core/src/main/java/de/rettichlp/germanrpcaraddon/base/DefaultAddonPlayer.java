@@ -7,7 +7,7 @@ import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
-import net.labymod.api.util.math.vector.FloatVector3;
+import net.labymod.api.util.math.position.Position;
 
 import java.util.UUID;
 
@@ -47,7 +47,7 @@ public class DefaultAddonPlayer implements AddonPlayer {
     }
 
     @Override
-    public FloatVector3 getLocation() {
+    public Position getLocation() {
         return getPlayer() != null ? getPlayer().position() : null;
     }
 

@@ -27,7 +27,7 @@ labyMod {
         displayName = "GermanRP Car Addon"
         author = "RettichLP"
         description = "Assistance systems and other nice-to-have features for the cars on GermanRP"
-        minecraftVersion = "1.21.1"
+        minecraftVersion = "1.21.4"
         version = rootProject.version.toString()
     }
 }

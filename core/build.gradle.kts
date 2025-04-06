@@ -8,15 +8,20 @@ dependencies {
     // addonMavenDependency("org.jeasy:easy-random:5.0.0")
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    addonMavenDependency("org.projectlombok", "lombok", "1.18.34")
+    addonMavenDependency("org.projectlombok", "lombok", "1.18.38")
 
     compileOnly("org.projectlombok", "lombok", "1.18.34")
-    annotationProcessor("org.projectlombok", "lombok", "1.18.34")
+    annotationProcessor("org.projectlombok", "lombok", "1.18.38")
 
-    testCompileOnly("org.projectlombok", "lombok", "1.18.34")
-    testAnnotationProcessor("org.projectlombok", "lombok", "1.18.34")
+    testCompileOnly("org.projectlombok", "lombok", "1.18.38")
+    testAnnotationProcessor("org.projectlombok", "lombok", "1.18.38")
 }
 
 labyModAnnotationProcessor {
     referenceType = ReferenceType.DEFAULT
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }

@@ -5,7 +5,7 @@ import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.player.ClientPlayer;
 import net.labymod.api.client.scoreboard.Scoreboard;
 import net.labymod.api.client.world.ClientWorld;
-import net.labymod.api.util.math.vector.FloatVector3;
+import net.labymod.api.util.math.position.Position;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -28,7 +28,7 @@ public interface AddonPlayer {
     Float getHealth();
 
     @Nullable
-    FloatVector3 getLocation();
+    Position getLocation();
 
     void sendMessage(String message);
 
