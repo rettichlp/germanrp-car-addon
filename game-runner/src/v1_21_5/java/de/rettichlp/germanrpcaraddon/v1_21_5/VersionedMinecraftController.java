@@ -1,20 +1,24 @@
-package de.rettichlp.germanrpcaraddon.v1_21_4;
+package de.rettichlp.germanrpcaraddon.v1_21_5;
 
 import de.rettichlp.germanrpcaraddon.controllers.MinecraftController;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.labymod.api.client.gui.screen.key.Key;
 import net.labymod.api.client.options.MinecraftInputMapping;
 import net.labymod.api.models.Implements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.network.HashedPatchMap;
+import net.minecraft.network.HashedStack;
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
+import net.minecraft.world.item.ItemStack;
 
 import javax.inject.Singleton;
 import java.util.List;
 
 import static com.mojang.blaze3d.platform.InputConstants.getKey;
-import static it.unimi.dsi.fastutil.ints.Int2ObjectMaps.EMPTY_MAP;
 import static java.util.Arrays.stream;
 import static java.util.Collections.emptyList;
+import static java.util.Objects.requireNonNull;
 import static java.util.Optional.ofNullable;
 import static net.minecraft.client.KeyMapping.click;
 import static net.minecraft.world.inventory.ClickType.PICKUP;
@@ -65,14 +69,18 @@ public class VersionedMinecraftController implements MinecraftController {
         }
 
         assert mc.player != null;
+        ItemStack clickedItem = mc.player.containerMenu.getSlot(slotNumber).getItem();
+        HashedPatchMap.HashGenerator hashGenerator = requireNonNull(mc.getConnection()).decoratedHashOpsGenenerator();
+        HashedStack carried = HashedStack.create(clickedItem, hashGenerator);
+
         ServerboundContainerClickPacket packet = new ServerboundContainerClickPacket(
                 containerId,
                 mc.player.containerMenu.getStateId(),
-                slotNumber,
-                button,
+                (short) slotNumber,
+                (byte) button,
                 PICKUP,
-                mc.player.containerMenu.getSlot(slotNumber).getItem(),
-                EMPTY_MAP
+                new Int2ObjectOpenHashMap<>(),
+                carried
         );
 
         mc.player.connection.send(packet);

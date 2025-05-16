@@ -1,4 +1,4 @@
-package de.rettichlp.germanrpcaraddon.v1_21_4;
+package de.rettichlp.germanrpcaraddon.v1_21_5;
 
 import de.rettichlp.germanrpcaraddon.controllers.CarController;
 import net.labymod.api.models.Implements;
